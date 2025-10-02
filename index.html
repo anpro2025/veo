@@ -334,15 +334,15 @@
     </div>
     
     <!-- Generic Memory Modal -->
-    <div id="memory-modal-container" class="modal-overlay hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-800 p-6 rounded-lg relative w-full max-w-[95vw] h-[95vh] flex flex-col shadow-2xl">
+    <div id="memory-modal-container" class="modal-overlay hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center z-50 p-4" style="justify-content: flex-start;">
+    <div id="memory-modal" class="bg-gray-800 p-6 rounded-lg relative w-full max-w-4xl h-[60vh] flex flex-col shadow-2xl text-base resize draggable" style="margin-left:100px !important; margin-bottom:100px; align-items: flex-start; justify-content: flex-end; resize: both; overflow: auto; min-width: 400px; min-height: 300px;">
             <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
-            <h2 id="memory-modal-title" class="text-2xl font-bold mb-6 flex-shrink-0">Bộ nhớ</h2>
-            <div class="flex space-x-6 flex-grow overflow-hidden">
+            <h2 id="memory-modal-title" class="text-lg font-bold mb-4 flex-shrink-0 cursor-move drag-handle" style="user-select:none;">Bộ nhớ</h2>
+            <div class="flex space-x-4 flex-grow overflow-hidden">
                 <!-- List -->
-                <div id="memory-list-column" class="w-1/6 border-r border-gray-700 pr-2 flex flex-col">
+                <div id="memory-list-column" class="border-r border-gray-700 pr-2 flex flex-col text-sm" style="width:300px; min-width:300px; max-width:300px;">
                     <div class="flex-shrink-0 flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-lg">Danh sách</h3>
+                        <h3 class="font-bold text-sm">Danh sách</h3>
                         <div class="flex items-center space-x-2">
                             <button type="button" id="delete-all-memory-btn" title="Xóa tất cả" class="hidden bg-red-600 hover:bg-red-700 text-white font-bold p-2 rounded-full transition duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
@@ -358,22 +358,22 @@
                             <button id="memory-new-item-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold p-2 rounded-full transition duration-300"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg></button>
                         </div>
                     </div>
-                    <div id="memory-modal-list" class="space-y-2 overflow-y-auto flex-grow"></div>
+                    <div id="memory-modal-list" class="space-y-2 overflow-y-auto flex-grow text-sm"></div>
                 </div>
                 <!-- Editor -->
-                <div id="memory-editor-panel" class="w-3/4 hidden flex flex-col">
-                    <form id="memory-modal-form" class="space-y-4 flex flex-col flex-grow">
+                <div id="memory-editor-panel" class="w-3/4 hidden flex flex-col text-sm">
+                    <form id="memory-modal-form" class="space-y-3 flex flex-col flex-grow text-sm">
                         <input type="hidden" id="memory-modal-id">
                         <div class="flex-shrink-0">
                             <label for="memory-modal-title-input" class="block text-sm font-medium text-gray-300">Tiêu đề</label>
-                            <input type="text" id="memory-modal-title-input" placeholder="Nhập tiêu đề..." required class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500">
+                            <input type="text" id="memory-modal-title-input" placeholder="Nhập tiêu đề..." required class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 text-sm">
                         </div>
                         <div class="flex-grow flex flex-col min-h-0">
                              <div class="flex justify-between items-center flex-shrink-0">
                                 <label for="memory-modal-content-input" class="block text-sm font-medium text-gray-300">Nội dung</label>
                                 <span id="memory-word-count" class="text-xs text-gray-400">0 từ</span>
                             </div>
-                            <textarea id="memory-modal-content-input" placeholder="Dán hoặc nhập nội dung..." required class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 flex-grow"></textarea>
+                            <textarea id="memory-modal-content-input" placeholder="Dán hoặc nhập nội dung..." required class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 flex-grow text-sm"></textarea>
                         </div>
                         <div class="flex justify-end space-x-3 pt-2 flex-shrink-0">
                             <button type="button" id="memory-edit-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-md">Chỉnh sửa</button>
@@ -476,6 +476,88 @@
             
             // --- Generic Memory Modal Elements ---
             const memoryModalContainer = document.getElementById('memory-modal-container');
+            
+                // Reusable drag-to-move helper for any .draggable element with a .drag-handle inside
+                function makeDraggable(draggableEl, handleEl) {
+                    let active = false, startX = 0, startY = 0, origX = 0, origY = 0;
+
+                    const onDown = (e) => {
+                        // Don't start drag when clicking interactive controls
+                        const interactive = e.target.closest('input, textarea, button, a, select, label');
+                        if (interactive) return;
+                        e.preventDefault();
+                        active = true;
+                        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                        const rect = draggableEl.getBoundingClientRect();
+                        startX = clientX;
+                        startY = clientY;
+                        origX = rect.left;
+                        origY = rect.top;
+                        draggableEl.style.position = 'fixed';
+                        draggableEl.style.margin = '0';
+                        draggableEl.style.zIndex = 9999;
+                        document.body.style.userSelect = 'none';
+                    };
+
+                    const onMove = (e) => {
+                        if (!active) return;
+                        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                        let dx = clientX - startX;
+                        let dy = clientY - startY;
+                        let newLeft = origX + dx;
+                        let newTop = origY + dy;
+                        // Compute dynamic bounds: avoid overlapping sidebar on the left, and keep above bottom navbar
+                        const sidebar = document.getElementById('collapsible-sidebar');
+                        const bottomNav = document.getElementById('bottom-navbar');
+                        const sidebarRect = sidebar ? sidebar.getBoundingClientRect() : { right: 0 };
+                        const bottomRect = bottomNav ? bottomNav.getBoundingClientRect() : { top: window.innerHeight };
+                        const gap = 10; // gap from edges
+                        const minLeft = Math.max(gap, sidebarRect.right + gap);
+                        const maxLeft = Math.max(minLeft, window.innerWidth - draggableEl.offsetWidth - gap);
+                        const minTop = gap;
+                        const maxTop = Math.max(minTop, bottomRect.top - draggableEl.offsetHeight - gap);
+                        // constrain to computed bounds
+                        newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
+                        newTop = Math.max(minTop, Math.min(maxTop, newTop));
+                        draggableEl.style.left = newLeft + 'px';
+                        draggableEl.style.top = newTop + 'px';
+                    };
+
+                    const onUp = () => {
+                        if (!active) return;
+                        active = false;
+                        document.body.style.userSelect = '';
+                    };
+
+                    handleEl.addEventListener('mousedown', onDown);
+                    handleEl.addEventListener('touchstart', onDown, { passive: false });
+                    window.addEventListener('mousemove', onMove);
+                    window.addEventListener('touchmove', onMove, { passive: false });
+                    window.addEventListener('mouseup', onUp);
+                    window.addEventListener('touchend', onUp);
+
+                    // Reset position when hidden
+                    const container = draggableEl.closest('.modal-overlay');
+                    if (container) {
+                        const mo = new MutationObserver(() => {
+                            if (container.classList.contains('hidden')) {
+                                draggableEl.style.left = '';
+                                draggableEl.style.top = '';
+                                draggableEl.style.position = '';
+                                draggableEl.style.margin = '';
+                                draggableEl.style.zIndex = '';
+                            }
+                        });
+                        mo.observe(container, { attributes: true, attributeFilter: ['class'] });
+                    }
+                }
+
+                // Initialize draggable for memory modal (we're already inside DOMContentLoaded)
+                const mem = document.getElementById('memory-modal');
+                const handle = document.querySelector('#memory-modal .drag-handle');
+                if (mem && handle) makeDraggable(mem, handle);
             const memoryModalTitle = document.getElementById('memory-modal-title');
             const memoryListColumn = document.getElementById('memory-list-column');
             const toggleListBtn = document.getElementById('toggle-list-btn');
