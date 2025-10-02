@@ -273,12 +273,12 @@
         
         <main class="flex-grow p-8 flex space-x-8 overflow-x-auto relative">
             <!-- Initial Input Column -->
-            <div id="script-form-container" class="workspace-column hidden w-[400px] flex-shrink-0 bg-gray-800 p-6 rounded-lg">
+            <div id="script-form-container" class="workspace-column hidden w-[400px] flex-shrink-0 bg-gray-800 p-6 rounded-lg" style="top:8px; bottom:8px; overflow:auto; font-size:12px;">
                 <!-- Đã xóa tiêu đề Nhập đầu vào -->
                 <form id="script-form" class="space-y-4">
                     <div>
                         <label for="script-idea" class="block text-sm font-medium text-gray-300">Ý tưởng kịch bản / Tóm tắt (Tùy chọn)</label>
-                        <textarea id="script-idea" rows="4" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500"></textarea>
+                        <textarea id="script-idea" rows="12" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500"></textarea>
                     </div>
                     <div class="space-y-4">
                         <div>
@@ -456,6 +456,25 @@
             const scriptFormContainer = document.getElementById('script-form-container');
             if (createScriptBtn && scriptFormContainer) {
                 createScriptBtn.addEventListener('click', () => {
+                    // Position the script form flush to the right of the collapsible sidebar with 8px gaps
+                    const sidebar = document.getElementById('collapsible-sidebar');
+                    const sidebarRect = sidebar ? sidebar.getBoundingClientRect() : { right: 0 };
+                    const leftGap = 8; // px gap from sidebar
+                    const topGap = 8; // px from top
+                    const desiredWidth = 400; // default width (class w-[400px])
+                    let left = Math.round(sidebarRect.right + leftGap);
+                    // ensure it fits in viewport
+                    const maxAllowedWidth = Math.max(200, window.innerWidth - left - 16);
+                    const width = Math.min(desiredWidth, maxAllowedWidth);
+                    scriptFormContainer.style.position = 'fixed';
+                    scriptFormContainer.style.top = '8px';
+                    scriptFormContainer.style.bottom = '8px';
+                    scriptFormContainer.style.left = left + 'px';
+                    scriptFormContainer.style.right = '8px';
+                    scriptFormContainer.style.width = '';
+                    scriptFormContainer.style.height = '';
+                    scriptFormContainer.style.maxHeight = '';
+                    scriptFormContainer.style.zIndex = 9998;
                     scriptFormContainer.classList.remove('hidden');
                 });
             }
@@ -762,12 +781,47 @@
             }
 
 
+            function resetFloatingPosition(el) {
+                if (!el) return;
+                el.style.position = '';
+                el.style.top = '';
+                el.style.left = '';
+                el.style.right = '';
+                el.style.width = '';
+                el.style.height = '';
+                el.style.maxHeight = '';
+                el.style.bottom = '';
+                el.style.zIndex = '';
+            }
+
             function hideMainPanels() {
-                scriptFormContainer.classList.add('hidden');
+                // hide and reset floating positions for known columns
+                const cols = [document.getElementById('script-form-container')];
+                cols.forEach(c => {
+                    if (c) c.classList.add('hidden');
+                    resetFloatingPosition(c);
+                });
             }
 
             function showWorkspaceColumn(element) {
                  hideMainPanels();
+                 // If showing the script form, position it flush to sidebar like the create button does
+                 if (element && element.id === 'script-form-container') {
+                     const sidebar = document.getElementById('collapsible-sidebar');
+                     const sidebarRect = sidebar ? sidebar.getBoundingClientRect() : { right: 0 };
+                     const leftGap = 8; // px gap from sidebar
+                     const topGap = 8; // px from top
+                     let left = Math.round(sidebarRect.right + leftGap);
+                     element.style.position = 'fixed';
+                     element.style.top = '8px';
+                     element.style.bottom = '8px';
+                     element.style.left = left + 'px';
+                     element.style.right = '8px';
+                     element.style.width = '';
+                     element.style.height = '';
+                     element.style.maxHeight = '';
+                     element.style.zIndex = 9998;
+                 }
                  element.classList.remove('hidden');
             }
 
